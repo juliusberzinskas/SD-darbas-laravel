@@ -11,6 +11,12 @@ return [
         'logout' => 'Logout',
     ],
 
+    'common' => [
+        'back' => 'Atgal',
+        'none' => 'Nėra',
+        'zero' => '0',
+    ],
+
     'home' => [
         'title' => 'Pagrindinis puslapis',
         'student' => 'Studento informacija',
@@ -37,6 +43,18 @@ return [
         'save' => 'Išsaugoti',
         'update' => 'Atnaujinti',
         'cannot_delete_past' => 'Įvykusių konferencijų trinti negalima.',
+
+        // NEW (client registration form)
+        'full_name' => 'Vardas Pavardė',
+        'full_name_placeholder' => 'Pvz. Jonas Jonaitis',
+        'email_placeholder' => 'pvz. jonas@email.com',
+    ],
+
+    'employee' => [
+        // NEW (employee show page)
+        'registered_clients' => 'Užsiregistravę klientai',
+        'no_registrations' => 'Nėra registracijų.',
+        'name' => 'Vardas',
     ],
 
     'admin' => [
@@ -51,5 +69,13 @@ return [
         'first_name' => 'Vardas',
         'last_name' => 'Pavardė',
         'email' => 'El. paštas',
+    ],
+
+    'confirm' => [
+        // NEW (SweetAlert delete confirm)
+        'title' => 'Ar tikrai?',
+        'text' => 'Šio veiksmo atšaukti negalima.',
+        'confirm_button' => 'Taip, trinti',
+        'cancel_button' => 'Atšaukti',
     ],
 ];
