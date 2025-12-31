@@ -63,6 +63,14 @@ return [
         'email_placeholder' => 'pvz. jonas@email.com',
     ],
 
+    'client' => [
+    'subtitle' => 'Pasirinkite konferenciją ir užsiregistruokite.',
+    'details_subtitle' => 'Konferencijos informacija ir registracija.',
+    'conference_info' => 'Konferencijos informacija',
+    'no_conferences' => 'Šiuo metu konferencijų nėra.',
+    'register_hint' => 'Po registracijos darbuotojas matys jūsų įrašą konferencijos puslapyje.',
+    ],
+
     'employee' => [
         // NEW (employee show page)
         'registered_clients' => 'Užsiregistravę klientai',

@@ -28,34 +28,37 @@ Route::post('/login/as-admin', [AuthController::class, 'loginAsAdmin'])->name('l
 Route::post('/login/as-employee', [AuthController::class, 'loginAsEmployee'])->name('login.as_employee');
 
 
-// Client subsystem
-Route::prefix('client')->name('client.')->group(function () {
-    Route::get('/conferences', [ClientController::class, 'index'])->name('conferences.index');
-    Route::get('/conferences/{id}', [ClientController::class, 'show'])->name('conferences.show');
+Route::prefix('client')->name('client.')
+    ->middleware(['auth.session', 'role:client|admin'])
+    ->group(function () {
+        Route::get('/conferences', [ClientController::class, 'index'])->name('conferences.index');
+        Route::get('/conferences/{id}', [ClientController::class, 'show'])->name('conferences.show');
+        Route::post('/conferences/{id}/register', [ClientController::class, 'register'])->name('conferences.register');
+    });
 
-    Route::post('/conferences/{id}/register', [ClientController::class, 'register'])
-        ->name('conferences.register');
-});
+// Employee subsystem (leidžiam employee ir admin)
+Route::prefix('employee')->name('employee.')
+    ->middleware(['auth.session', 'role:employee|admin'])
+    ->group(function () {
+        Route::get('/conferences', [EmployeeController::class, 'index'])->name('conferences.index');
+        Route::get('/conferences/{id}', [EmployeeController::class, 'show'])->name('conferences.show');
+    });
 
-// Employee subsystem
-Route::prefix('employee')->name('employee.')->group(function () {
-    Route::get('/conferences', [EmployeeController::class, 'index'])->name('conferences.index');
-    Route::get('/conferences/{id}', [EmployeeController::class, 'show'])->name('conferences.show');
-});
+// Admin subsystem (tik admin)
+Route::prefix('admin')->name('admin.')
+    ->middleware(['auth.session', 'role:admin'])
+    ->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('index');
 
-// Admin subsystem
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index');
+        Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+        Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{id}', [UsersController::class, 'update'])->name('users.update');
 
-    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
-    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{id}', [UsersController::class, 'update'])->name('users.update');
-
-    Route::get('/conferences', [ConferencesController::class, 'index'])->name('conferences.index');
-    Route::get('/conferences/create', [ConferencesController::class, 'create'])->name('conferences.create');
-    Route::post('/conferences', [ConferencesController::class, 'store'])->name('conferences.store');
-    Route::get('/conferences/{id}', [ConferencesController::class, 'show'])->name('conferences.show');
-    Route::get('/conferences/{id}/edit', [ConferencesController::class, 'edit'])->name('conferences.edit');
-    Route::put('/conferences/{id}', [ConferencesController::class, 'update'])->name('conferences.update');
-    Route::delete('/conferences/{id}', [ConferencesController::class, 'destroy'])->name('conferences.destroy');
-});
+        Route::get('/conferences', [ConferencesController::class, 'index'])->name('conferences.index');
+        Route::get('/conferences/create', [ConferencesController::class, 'create'])->name('conferences.create');
+        Route::post('/conferences', [ConferencesController::class, 'store'])->name('conferences.store');
+        Route::get('/conferences/{id}', [ConferencesController::class, 'show'])->name('conferences.show');
+        Route::get('/conferences/{id}/edit', [ConferencesController::class, 'edit'])->name('conferences.edit');
+        Route::put('/conferences/{id}', [ConferencesController::class, 'update'])->name('conferences.update');
+        Route::delete('/conferences/{id}', [ConferencesController::class, 'destroy'])->name('conferences.destroy');
+    });
