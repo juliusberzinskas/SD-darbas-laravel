@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class FakeDataStore
 {
@@ -33,15 +33,33 @@ class FakeDataStore
             ]);
         }
 
-        if (!session()->has('users')) {
-            session([
-                'users' => [
-                    1 => ['id' => 1, 'first_name' => 'Admin', 'last_name' => 'User', 'email' => 'admin@example.com'],
-                    2 => ['id' => 2, 'first_name' => 'Employee', 'last_name' => 'User', 'email' => 'employee@example.com'],
-                    3 => ['id' => 3, 'first_name' => 'Client', 'last_name' => 'User', 'email' => 'client@example.com'],
-                ],
+            if (!session()->has('users')) {
+                session([
+                    'users' => [
+                        1 => [
+                            'id' => 1,
+                            'first_name' => 'Admin',
+                            'last_name' => 'User',
+                            'email' => 'admin@example.com',
+                            'role' => 'admin',
+                            'password' => Hash::make('admin123'),
+                        ],
+                        2 => [
+                            'id' => 2,
+                            'first_name' => 'Employee',
+                            'last_name' => 'User',
+                            'email' => 'employee@example.com',
+                            'role' => 'employee',
+                            'password' => Hash::make('employee123'),
+                        ],
+                    ],
             ]);
         }
+
+        if (!session()->has('auth_user')) {
+            session(['auth_user' => null]);
+        }
+
 
         if (!session()->has('current_user')) {
             session([

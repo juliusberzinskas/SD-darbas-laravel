@@ -10,37 +10,6 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            {{ __('app.app_title') }}
-        </a>
-
-        <div class="d-flex gap-2">
-            <a class="btn btn-outline-primary" href="{{ route('client.conferences.index') }}">
-                {{ __('app.nav.client') }}
-            </a>
-            <a class="btn btn-outline-primary" href="{{ route('employee.conferences.index') }}">
-                {{ __('app.nav.employee') }}
-            </a>
-            <a class="btn btn-outline-primary" href="{{ route('admin.index') }}">
-                {{ __('app.nav.admin') }}
-            </a>
-        </div>
-
-        <div class="ms-auto d-flex align-items-center gap-3">
-            <span class="text-muted">
-                {{ session('current_user.first_name', 'Demo') }}
-                {{ session('current_user.last_name', 'User') }}
-            </span>
-
-            <button class="btn btn-outline-secondary" disabled>
-                {{ __('app.nav.logout') }}
-            </button>
-        </div>
-    </div>
-</nav>
-
 <main class="container py-4">
     {{-- Flash messages --}}
     @if(session('success'))

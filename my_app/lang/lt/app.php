@@ -17,6 +17,19 @@ return [
         'zero' => '0',
     ],
 
+    'auth' => [
+        'login_title' => 'Prisijungimas',
+        'login_subtitle' => 'Prisijunkite prie sistemos.',
+        'password' => 'Slaptažodis',
+        'login_button' => 'Prisijungti',
+        'no_account' => 'Neturite paskyros?',
+        'register_link' => 'Registruotis',
+        'quick_login' => 'Greitas prisijungimas (be slaptažodžio):',
+        'login_as_admin' => 'Prisijungti kaip administratorius',
+        'login_as_employee' => 'Prisijungti kaip darbuotojas',
+],
+
+
     'home' => [
         'title' => 'Pagrindinis puslapis',
         'student' => 'Studento informacija',
