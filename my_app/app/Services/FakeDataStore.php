@@ -13,17 +13,17 @@ class FakeDataStore
                 'conferences' => [
                     1 => [
                         'id' => 1,
-                        'title' => 'Laravel Basics',
+                        'title' => 'Laravel mokymo kursai',
                         'description' => 'Intro to Laravel routing and views.',
-                        'speakers' => 'John Doe',
+                        'speakers' => 'Jonas Jonaitis',
                         'date' => now()->addDays(10)->toDateString(),
                         'time' => '10:00',
                         'address' => 'Vilnius, LT',
                     ],
                     2 => [
                         'id' => 2,
-                        'title' => 'Web Security',
-                        'description' => 'OWASP basics for web developers.',
+                        'title' => 'US akcijų apžvalga',
+                        'description' => 'Geriausiu US akcijų atrinkimas',
                         'speakers' => 'Jane Smith',
                         'date' => now()->subDays(3)->toDateString(),
                         'time' => '14:00',
