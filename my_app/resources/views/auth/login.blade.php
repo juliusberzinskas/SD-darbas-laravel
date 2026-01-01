@@ -55,27 +55,6 @@
             </div>
         </div>
 
-        <div class="card mt-3">
-            <div class="card-body p-3">
-
-                <div class="d-grid gap-2">
-                    <form method="POST" action="{{ route('login.as_admin') }}">
-                        @csrf
-                        <button class="btn btn-outline-danger w-100" type="submit">
-                            {{ __('app.auth.login_as_admin') }}
-                        </button>
-                    </form>
-
-                    <form method="POST" action="{{ route('login.as_employee') }}">
-                        @csrf
-                        <button class="btn btn-outline-secondary w-100" type="submit">
-                            {{ __('app.auth.login_as_employee') }}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <div class="text-center mt-3 small text-muted">
             © {{ date('Y') }} {{ __('app.app_title') }}
         </div>
