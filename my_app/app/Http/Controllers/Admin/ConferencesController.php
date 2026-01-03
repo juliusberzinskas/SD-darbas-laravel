@@ -4,90 +4,78 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConferenceRequest;
-use App\Services\FakeDataStore;
+use App\Models\Conference;
+use Carbon\Carbon;
 
 class ConferencesController extends Controller
 {
     public function index()
     {
-        FakeDataStore::seed();
-        $conferences = session('conferences');
+        $conferences = Conference::orderBy('date', 'asc')
+            ->orderBy('time', 'asc')
+            ->get();
 
         return view('admin.conferences.index', compact('conferences'));
     }
 
     public function show(int $id)
     {
-        FakeDataStore::seed();
-        $conference = session('conferences')[$id] ?? abort(404);
+        $conference = Conference::findOrFail($id);
 
         return view('admin.conferences.show', compact('conference'));
     }
 
     public function create()
     {
-        FakeDataStore::seed();
-        $conference = [
-            'title' => '',
-            'description' => '',
-            'speakers' => '',
-            'date' => '',
-            'time' => '',
-            'address' => '',
-        ];
+        // Kad tavo view'ai (kurie tikriausiai naudoja $conference->...) veiktų vienodai,
+        // perduodam tuščią modelį
+        $conference = new Conference();
 
         return view('admin.conferences.create', compact('conference'));
     }
 
     public function store(ConferenceRequest $request)
     {
-        FakeDataStore::seed();
+        Conference::create($request->validated());
 
-        $conferences = session('conferences');
-        $id = empty($conferences) ? 1 : (max(array_keys($conferences)) + 1);
-
-        $conferences[$id] = array_merge(['id' => $id], $request->validated());
-        session(['conferences' => $conferences]);
-
-        return redirect()->route('admin.conferences.index');
+        return redirect()
+            ->route('admin.conferences.index')
+            ->with('success', __('app.conference.save') . ' OK');
     }
 
     public function edit(int $id)
     {
-        FakeDataStore::seed();
-        $conference = session('conferences')[$id] ?? abort(404);
+        $conference = Conference::findOrFail($id);
 
         return view('admin.conferences.edit', compact('conference'));
     }
 
     public function update(ConferenceRequest $request, int $id)
     {
-        FakeDataStore::seed();
+        $conference = Conference::findOrFail($id);
+        $conference->update($request->validated());
 
-        $conferences = session('conferences');
-        if (!isset($conferences[$id])) abort(404);
-
-        $conferences[$id] = array_merge($conferences[$id], $request->validated());
-        session(['conferences' => $conferences]);
-
-        return redirect()->route('admin.conferences.index');
+        return redirect()
+            ->route('admin.conferences.index')
+            ->with('success', __('app.conference.update') . ' OK');
     }
 
     public function destroy(int $id)
     {
-        FakeDataStore::seed();
+        $conference = Conference::findOrFail($id);
 
-        $conferences = session('conferences');
-        $conference = $conferences[$id] ?? abort(404);
-
-        if (FakeDataStore::isPastConference($conference)) {
-            return redirect()->route('admin.conferences.index')
+        // SD1 taisyklė: įvykusių konferencijų trinti negalima
+        $date = Carbon::parse($conference->date)->startOfDay();
+        if ($date->isPast()) {
+            return redirect()
+                ->route('admin.conferences.index')
                 ->with('error', __('app.conference.cannot_delete_past'));
         }
 
-        unset($conferences[$id]);
-        session(['conferences' => $conferences]);
+        $conference->delete();
 
-        return redirect()->route('admin.conferences.index');
+        return redirect()
+            ->route('admin.conferences.index')
+            ->with('success', __('app.conference.delete') . ' OK');
     }
 }

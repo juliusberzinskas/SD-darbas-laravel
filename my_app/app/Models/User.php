@@ -24,15 +24,17 @@ class User extends Authenticatable
         'password',
     ];
 
+    
+
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'users_roles')
             ->withTimestamps();
     }
 
-    public function conferences(): BelongsToMany
+    public function conferences()
     {
-        return $this->belongsToMany(Conference::class, 'users_conferences')
+        return $this->belongsToMany(\App\Models\Conference::class, 'users_conferences')
             ->withTimestamps();
     }
 

@@ -23,24 +23,24 @@
     <tbody>
         @forelse($conferences as $conf)
             <tr>
-                <td>{{ $conf['id'] }}</td>
-                <td>{{ $conf['title'] }}</td>
-                <td>{{ $conf['date'] }}</td>
-                <td>{{ $conf['time'] }}</td>
-                <td>{{ $conf['address'] }}</td>
+                <td>{{ $conf->id }}</td>
+                <td>{{ $conf->title }}</td>
+                <td>{{ $conf->date }}</td>
+                <td>{{ $conf->time }}</td>
+                <td>{{ $conf->address }}</td>
                 <td class="text-end">
                     <a class="btn btn-sm btn-outline-primary"
-                       href="{{ route('admin.conferences.show', $conf['id']) }}">
+                       href="{{ route('admin.conferences.show', $conf->id) }}">
                         {{ __('app.conference.view') }}
                     </a>
 
                     <a class="btn btn-sm btn-outline-secondary"
-                       href="{{ route('admin.conferences.edit', $conf['id']) }}">
+                       href="{{ route('admin.conferences.edit', $conf->id) }}">
                         {{ __('app.conference.edit') }}
                     </a>
 
-                    <form id="delete-form-{{ $conf['id'] }}"
-                          action="{{ route('admin.conferences.destroy', $conf['id']) }}"
+                    <form id="delete-form-{{ $conf->id }}"
+                          action="{{ route('admin.conferences.destroy', $conf->id) }}"
                           method="POST"
                           class="d-inline">
                         @csrf
@@ -48,7 +48,7 @@
 
                         <button type="button"
                                 class="btn btn-sm btn-outline-danger"
-                                onclick="confirmDelete('delete-form-{{ $conf['id'] }}')">
+                                onclick="confirmDelete('delete-form-{{ $conf->id }}')">
                             {{ __('app.conference.delete') }}
                         </button>
                     </form>
