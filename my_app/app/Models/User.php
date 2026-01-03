@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,23 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'users_roles')
+            ->withTimestamps();
+    }
+
+    public function conferences(): BelongsToMany
+    {
+        return $this->belongsToMany(Conference::class, 'users_conferences')
+            ->withTimestamps();
+    }
+
+    public function hasRole(string $roleName): bool
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
 
     /**
      * The attributes that should be hidden for serialization.
